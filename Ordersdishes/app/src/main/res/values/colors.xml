@@ -3,4 +3,24 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- primary colors -->
+    <color name="red">#FF2A00</color>
+    <color name="blue">#1E98E4</color>
+    <color name="green">#26B99A</color>
+
+    <!-- Other colors -->
+    <color name="colorTitleText">#212121</color>
+    <color name="colorSubheadText">#212121</color>
+    <color name="colorBody1Text">#757575</color>
+    <color name="colorInverseText">#FFFFFF</color>
+
+    <color name="colorDivider">#ACACAC</color>
+    <color name="colorInverseDivider">#FFFFFF</color>
+
+    <color name="colorPrimaryButton">#1A82C3</color>
+    <color name="colorSuccessButton">#26B99A</color>
+    <color name="colorInfoButton">#4FB5D3</color>
+    <color name="colorWarningButton">#d58512</color>
+    <color name="colorDangerButton">#D43F3A</color>
 </resources>
