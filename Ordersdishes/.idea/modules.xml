@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Ordersdishes.iml" filepath="$PROJECT_DIR$/Ordersdishes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/commonUtils-release/commonUtils-release.iml" filepath="$PROJECT_DIR$/commonUtils-release/commonUtils-release.iml" />
+    </modules>
+  </component>
+</project>
