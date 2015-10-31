@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Orders dishes</string>
+    <string name="app_name">FoodCourt</string>
     
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>

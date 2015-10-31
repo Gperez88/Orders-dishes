@@ -1,0 +1,139 @@
+package com.android.app.ordersdishes.activities;
+
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.android.app.ordersdishes.R;
+import com.android.app.ordersdishes.service.ApiOrderDishesService;
+
+import android.app.AlertDialog;
+
+import com.android.app.ordersdishes.service.impl.ApiOrderDishesImpl;
+import com.gp89developers.android.commonutils.activity.dialog.ProgressDialog;
+import com.gp89developers.android.commonutils.utils.CustomAsyncTask;
+
+public class LoginActivity extends BaseAppActivity {
+
+    private UserLoginTask userLoginTask;
+    private SharedPreferences preferences;
+
+    //ui elements
+    private AutoCompleteTextView usernameTextView;
+    private EditText passwordEditView;
+    private Button signInButton;
+    private Button registerButton;
+
+    public LoginActivity() {
+        super(R.layout.activity_login);
+    }
+
+    @Override
+    protected void initComponents() {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        usernameTextView = (AutoCompleteTextView) findViewById(R.id.username);
+        passwordEditView = (EditText) findViewById(R.id.password);
+
+        signInButton = (Button) findViewById(R.id.sign_in_button);
+        registerButton = (Button) findViewById(R.id.register_button);
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
+
+        confirmationLogged();
+    }
+
+    private void confirmationLogged() {
+        boolean isLogged = preferences.getString(getString(R.string.prompt_username), null) != null;
+
+        if (isLogged){
+            //TODO: start activity dishes.
+        }
+    }
+
+    private void login() {
+        if (validFields()) {
+            String username = usernameTextView.getText().toString();
+            String password = passwordEditView.getText().toString();
+
+            userLoginTask = new UserLoginTask();
+            userLoginTask.execute(username, password);
+        }
+    }
+
+    private boolean validFields() {
+        if (TextUtils.isEmpty(usernameTextView.getText().toString().trim())) {
+            usernameTextView.setError(getString(R.string.error_field_required));
+            return false;
+        } else if (TextUtils.isEmpty(passwordEditView.getText().toString().trim())) {
+            passwordEditView.setError(getString(R.string.error_field_required));
+            return false;
+        }
+        return true;
+    }
+
+    private class UserLoginTask extends CustomAsyncTask<String, Void, Boolean> {
+        private static final int COUNT_PARAMS = 2;
+        private static final int USERNAME_INDEX_PARAM = 0;
+        private static final int PASSWORD_INDEX_PARAM = 1;
+
+        private AlertDialog progressDialog;
+        private ApiOrderDishesService apiOrderDishesService;
+
+        private String username;
+        private String password;
+
+        public UserLoginTask() {
+            super(LoginActivity.this);
+            apiOrderDishesService = new ApiOrderDishesImpl();
+
+            progressDialog = new ProgressDialog(LoginActivity.this, R.style.TransparentDialog);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            boolean isValidParams = (params != null && params.length == COUNT_PARAMS)
+                    && (params[USERNAME_INDEX_PARAM] != null && params[PASSWORD_INDEX_PARAM] != null);
+
+            if (!isValidParams)
+                return false;
+
+            username = params[USERNAME_INDEX_PARAM].trim();
+            password = params[PASSWORD_INDEX_PARAM].trim();
+
+            //simulates a process
+            for (int i = 0; i < 100; i++) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return apiOrderDishesService.login(username, password);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean loginSuccessful) {
+            if (loginSuccessful) {
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(getString(R.string.prompt_username), username);
+                editor.putString(getString(R.string.prompt_password), password);
+                editor.apply();
+            }
+            progressDialog.dismiss();
+        }
+    }
+}
+
