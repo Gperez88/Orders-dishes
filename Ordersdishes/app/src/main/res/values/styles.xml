@@ -1,0 +1,52 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Text Styles -->
+    <style name="TextAppearance.AppTheme.Title" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/colorTitleText</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.Title.Inverse" parent="@style/TextAppearance.AppCompat.Title.Inverse">
+        <item name="android:textColor">@color/colorInverseText</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.Subhead" parent="@style/TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/colorSubheadText</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.Subhead.Inverse" parent="@style/TextAppearance.AppCompat.Subhead.Inverse">
+        <item name="android:textColor">@color/colorInverseText</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.Body1" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/colorBody1Text</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.Body1.Inverse" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/colorInverseText</item>
+    </style>
+
+    <!-- Button Styles-->
+    <style name="AppTheme.PrimaryButton">
+        <item name="android:textColor">@color/colorInverseText</item>
+        <item name="colorButtonNormal">@color/colorPrimaryButton</item>
+    </style>
+
+    <style name="AppTheme.SuccessButton">
+        <item name="android:textColor">@color/colorInverseText</item>
+        <item name="colorButtonNormal">@color/colorSuccessButton</item>
+    </style>
+
+    <style name="AppTheme.DangerButton">
+        <item name="android:textColor">@color/colorInverseText</item>
+        <item name="colorButtonNormal">@color/colorDangerButton</item>
+    </style>
+
+</resources>
