@@ -22,6 +22,11 @@
         <activity
             android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DishActivity"
+            android:label="@string/title_activity_dish"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,30 +22,42 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
     @Override
     public boolean login(String username, String password) {
         //TODO: implement
-        return false;
+        return true;
     }
 
     @Override
     public boolean register(String username, String password, String confirmationPassword) {
-        //TODO: implement
+        //TODO: implement real method
         return false;
     }
 
     @Override
     public List<Dish> getListDishes() {
-        //TODO: implement
-        return null;
+        //TODO: implement real method
+
+        List<Dish> dishes = new ArrayList<>();
+        for (int index = 1; index < 100; index++) {
+            Dish dish = new Dish();
+            dish.setId(index);
+            dish.setName("Dish #" + index);
+            dish.setDescription("Description dish #" + index);
+            dish.setPrice(199.99f);
+
+            dishes.add(dish);
+        }
+
+        return dishes;
     }
 
     @Override
     public boolean registerOrder(Order order, String username) {
-        //TODO: implement
+        //TODO: implement real method
         return false;
     }
 
     @Override
     public List<Order> getListOrders(int userId) {
-        //TODO: implement
+        //TODO: implement real method
         return null;
     }
 
@@ -54,7 +67,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
 
         String jsonStr = null;
 
-        if(builtUri == null)
+        if (builtUri == null)
             return null;
 
         try {
@@ -66,7 +79,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
             urlConnection.connect();
 
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
                 return null;
             }
@@ -74,7 +87,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
+                buffer.append(line).append("\n");
             }
 
             if (buffer.length() == 0) {

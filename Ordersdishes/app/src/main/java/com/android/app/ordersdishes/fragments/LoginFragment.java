@@ -4,13 +4,13 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.app.ordersdishes.R;
+import com.android.app.ordersdishes.activities.DishActivity;
 import com.android.app.ordersdishes.activities.RegisterActivity;
 import com.android.app.ordersdishes.service.ApiOrderDishesService;
 import com.android.app.ordersdishes.service.impl.ApiOrderDishesImpl;
@@ -77,8 +77,15 @@ public class LoginFragment extends BaseAppFormFragment {
         boolean isLogged = preferences.getString(getString(R.string.prompt_username), null) != null;
 
         if (isLogged) {
-            //TODO: start activity dishes.
+            goToDishActivity();
         }
+    }
+
+    private void goToDishActivity() {
+        Intent dishIntent = new Intent(getSupportActivity(), DishActivity.class);
+        startActivity(dishIntent);
+
+        getSupportActivity().finish();
     }
 
     private void login() {
@@ -90,17 +97,6 @@ public class LoginFragment extends BaseAppFormFragment {
             userLoginTask.execute(username, password);
         }
     }
-
-//    private boolean validFields() {
-//        if (TextUtils.isEmpty(usernameTextView.getText().toString().trim())) {
-//            usernameTextView.setError(getString(R.string.error_field_required));
-//            return false;
-//        } else if (TextUtils.isEmpty(passwordEditView.getText().toString().trim())) {
-//            passwordEditView.setError(getString(R.string.error_field_required));
-//            return false;
-//        }
-//        return true;
-//    }
 
     private class UserLoginTask extends CustomAsyncTask<String, Void, Boolean> {
         private static final int COUNT_PARAMS = 2;
@@ -152,6 +148,8 @@ public class LoginFragment extends BaseAppFormFragment {
                 editor.putString(getString(R.string.prompt_username), username);
                 editor.putString(getString(R.string.prompt_password), password);
                 editor.apply();
+
+                goToDishActivity();
             }
             progressDialog.dismiss();
         }
