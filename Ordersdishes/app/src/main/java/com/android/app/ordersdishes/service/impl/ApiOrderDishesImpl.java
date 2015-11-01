@@ -21,13 +21,13 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
     @Override
     public boolean login(String username, String password) {
         //TODO: implement
-        return true;
+        return false;
     }
 
     @Override
     public boolean register(String username, String password, String confirmationPassword) {
         //TODO: implement
-        return true;
+        return false;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
     @Override
     public boolean registerOrder(Order order, String username) {
         //TODO: implement
-        return true;
+        return false;
     }
 
     @Override
