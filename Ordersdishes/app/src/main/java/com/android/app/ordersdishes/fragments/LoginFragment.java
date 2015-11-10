@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.app.ordersdishes.R;
-import com.android.app.ordersdishes.activities.DishActivity;
+import com.android.app.ordersdishes.activities.MainActivity;
 import com.android.app.ordersdishes.activities.RegisterActivity;
 import com.android.app.ordersdishes.service.ApiOrderDishesService;
 import com.android.app.ordersdishes.service.impl.ApiOrderDishesImpl;
@@ -77,13 +77,13 @@ public class LoginFragment extends BaseAppFormFragment {
         boolean isLogged = preferences.getString(getString(R.string.prompt_username), null) != null;
 
         if (isLogged) {
-            goToDishActivity();
+            goToMainActivity();
         }
     }
 
-    private void goToDishActivity() {
-        Intent dishIntent = new Intent(getSupportActivity(), DishActivity.class);
-        startActivity(dishIntent);
+    private void goToMainActivity() {
+        Intent mainIntent = new Intent(getSupportActivity(), MainActivity.class);
+        startActivity(mainIntent);
 
         getSupportActivity().finish();
     }
@@ -128,16 +128,6 @@ public class LoginFragment extends BaseAppFormFragment {
 
             username = params[USERNAME_INDEX_PARAM].trim();
             password = params[PASSWORD_INDEX_PARAM].trim();
-
-            //simulates a process
-            for (int i = 0; i < 100; i++) {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
             return apiOrderDishesService.login(username, password);
         }
 
@@ -149,7 +139,7 @@ public class LoginFragment extends BaseAppFormFragment {
                 editor.putString(getString(R.string.prompt_password), password);
                 editor.apply();
 
-                goToDishActivity();
+                goToMainActivity();
             }
             progressDialog.dismiss();
         }

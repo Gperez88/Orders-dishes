@@ -19,25 +19,24 @@
             android:weightSum="10">
 
             <ImageView
-                android:id="@+id/trash"
+                android:id="@+id/deliver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:scaleType="fitStart"
-                android:src="@drawable/ic_order" />
+                android:src="@drawable/ic_deliver" />
 
             <Button
-                android:id="@+id/register_order_button"
+                android:id="@+id/receive_order_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="@string/place_your_order"
+                android:text="@string/order_received"
                 android:theme="@style/AppTheme.DefaultButton" />
         </LinearLayout>
 
-        <include layout="@layout/dish_layout" />
+        <include layout="@layout/order_layout" />
 
     </com.daimajia.swipe.SwipeLayout>
-
 
 </LinearLayout>

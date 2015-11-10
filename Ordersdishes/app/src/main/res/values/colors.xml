@@ -2,25 +2,30 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
-    <!-- primary colors -->
-    <color name="red">#FF2A00</color>
-    <color name="blue">#1E98E4</color>
-    <color name="green">#26B99A</color>
+    <color name="colorAccent">#26B99A</color>
 
     <!-- Other colors -->
-    <color name="colorTitleText">#212121</color>
-    <color name="colorSubheadText">#212121</color>
+    <color name="black">#212121</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#FF2A00</color>
+    <color name="red_light">#d43f3a</color>
+    <color name="blue">#1E98E4</color>
+    <color name="blue_light">#4FB5D3</color>
+    <color name="green">#26B99A</color>
+
+    <color name="colorText">@color/black</color>
+    <color name="colorInverseText">@color/white</color>
+    <color name="colorTitleText">@color/colorText</color>
+    <color name="colorSubheadText">@color/colorText</color>
     <color name="colorBody1Text">#757575</color>
-    <color name="colorInverseText">#FFFFFF</color>
 
     <color name="colorDivider">#ACACAC</color>
-    <color name="colorInverseDivider">#FFFFFF</color>
+    <color name="colorInverseDivider">@color/white</color>
 
-    <color name="colorPrimaryButton">#1A82C3</color>
-    <color name="colorSuccessButton">#26B99A</color>
-    <color name="colorInfoButton">#4FB5D3</color>
+    <color name="colorDefaultButton">@color/white</color>
+    <color name="colorPrimaryButton">@color/blue</color>
+    <color name="colorSuccessButton">@color/green</color>
+    <color name="colorInfoButton">@color/blue_light</color>
     <color name="colorWarningButton">#d58512</color>
-    <color name="colorDangerButton">#D43F3A</color>
+    <color name="colorDangerButton">@color/red_light</color>
 </resources>

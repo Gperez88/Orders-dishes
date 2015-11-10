@@ -16,6 +16,16 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="AppTheme.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabTextAppearance">@style/AppTheme.TextAppearance</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">true</item>
+    </style>
+
     <!-- Text Styles -->
     <style name="TextAppearance.AppTheme.Title" parent="@style/TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/colorTitleText</item>
@@ -42,6 +52,11 @@
     </style>
 
     <!-- Button Styles-->
+    <style name="AppTheme.DefaultButton">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="colorButtonNormal">@color/colorDefaultButton</item>
+    </style>
+
     <style name="AppTheme.PrimaryButton">
         <item name="android:textColor">@color/colorInverseText</item>
         <item name="colorButtonNormal">@color/colorPrimaryButton</item>
