@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,32 +22,95 @@ import java.util.List;
 public class ApiOrderDishesImpl implements ApiOrderDishesService {
     @Override
     public boolean login(String username, String password) {
-        //TODO: implement
-        return false;
+        //TODO: implement actual method
+
+        //simulates a process
+        for (int i = 0; i < 50; i++) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
     }
 
     @Override
     public boolean register(String username, String password, String confirmationPassword) {
-        //TODO: implement
-        return false;
+        //TODO: implement actual method
+        return true;
     }
 
     @Override
     public List<Dish> getListDishes() {
-        //TODO: implement
-        return null;
+        //TODO: implement actual method
+
+        //simulates a process
+        for (int i = 0; i < 50; i++) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        List<Dish> dishes = new ArrayList<>();
+
+        for (int index = 1; index < 50; index++) {
+            Dish dish = new Dish();
+            dish.setId(index);
+            dish.setName("Dish #" + index);
+            dish.setDescription("Description dish #" + index);
+            dish.setPrice(199.99f);
+
+            dishes.add(dish);
+        }
+
+        return dishes;
     }
 
     @Override
     public boolean registerOrder(Order order, String username) {
-        //TODO: implement
+        //TODO: implement actual method
         return false;
     }
 
     @Override
-    public List<Order> getListOrders(int userId) {
-        //TODO: implement
-        return null;
+    public List<Order> getListOrders(String username) {
+        //TODO: implement actual method
+
+        //simulates a process
+        for (int i = 0; i < 50; i++) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        List<Order> orders = new ArrayList<>();
+
+        if (username == null)
+            return orders;
+
+        Dish dish = new Dish();
+        dish.setId(1);
+        dish.setName("Dish #" + 1);
+        dish.setDescription("Description dish #" + 1);
+        dish.setPrice(199.99f);
+
+        for (int index = 1; index < 10; index++) {
+            Order order = new Order();
+            order.setId(index);
+            order.setDish(dish);
+            order.setDate(new Date());
+            order.setState(0);
+
+            orders.add(order);
+        }
+
+        return orders;
     }
 
     private String callBaseApiService(Uri builtUri) {
@@ -54,7 +119,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
 
         String jsonStr = null;
 
-        if(builtUri == null)
+        if (builtUri == null)
             return null;
 
         try {
@@ -66,7 +131,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
             urlConnection.connect();
 
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
                 return null;
             }
@@ -74,7 +139,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
+                buffer.append(line).append("\n");
             }
 
             if (buffer.length() == 0) {

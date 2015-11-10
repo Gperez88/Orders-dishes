@@ -133,12 +133,11 @@ public class RegisterFragment extends BaseAppFormFragment {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putBoolean(getString(R.string.register_user), true);
                 editor.apply();
+
+                getSupportActivity().onBackPressed();
             }
 
             progressDialog.dismiss();
-
-            //TODO: this happens only if the user gets to register, now I put it like that.
-            getSupportActivity().onBackPressed();
         }
     }
 }
