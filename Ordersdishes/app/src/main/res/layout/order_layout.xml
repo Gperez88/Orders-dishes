@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/normal_padding">
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/small_margin"
+        android:src="@mipmap/ic_order_line" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/thumbnail"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/name_dish"
+            style="@style/TextAppearance.AppTheme.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="@dimen/normal_margin"
+            android:layout_toLeftOf="@+id/state"
+            android:text="Dish name"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/state"
+            style="@style/TextAppearance.AppTheme.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:singleLine="true"
+            android:textColor="@color/blue_light"
+            android:text="Pendiente"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/TextAppearance.AppTheme.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_dish"
+            android:text="10/12/2015 11:45 AM" />
+
+    </RelativeLayout>
+</RelativeLayout>

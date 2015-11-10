@@ -2,10 +2,28 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="AppTheme.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabTextAppearance">@style/AppTheme.TextAppearance</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">true</item>
     </style>
 
     <!-- Text Styles -->
@@ -34,6 +52,11 @@
     </style>
 
     <!-- Button Styles-->
+    <style name="AppTheme.DefaultButton">
+        <item name="android:textColor">@color/colorText</item>
+        <item name="colorButtonNormal">@color/colorDefaultButton</item>
+    </style>
+
     <style name="AppTheme.PrimaryButton">
         <item name="android:textColor">@color/colorInverseText</item>
         <item name="colorButtonNormal">@color/colorPrimaryButton</item>
@@ -48,5 +71,4 @@
         <item name="android:textColor">@color/colorInverseText</item>
         <item name="colorButtonNormal">@color/colorDangerButton</item>
     </style>
-
 </resources>
