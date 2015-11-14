@@ -26,6 +26,7 @@
             style="@style/TextAppearance.AppTheme.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/normal_margin"
             android:layout_toLeftOf="@+id/state"

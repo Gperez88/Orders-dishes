@@ -115,16 +115,7 @@ public class RegisterFragment extends BaseAppFormFragment {
             password = params[PASSWORD_INDEX_PARAM].trim();
             confirmationPassword = params[CONFIRMATION_PASSWORD_INDEX_PARAM].trim();
 
-            //simulates a process
-            for (int i = 0; i < 100; i++) {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return apiOrderDishesService.register(username, password, confirmationPassword);
+            return apiOrderDishesService.register(username, password);
         }
 
         @Override

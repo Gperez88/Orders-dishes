@@ -29,6 +29,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/normal_margin"
             android:layout_toLeftOf="@+id/price"
+            android:singleLine="true"
             android:text="Dish name"
             android:textStyle="bold" />
 
