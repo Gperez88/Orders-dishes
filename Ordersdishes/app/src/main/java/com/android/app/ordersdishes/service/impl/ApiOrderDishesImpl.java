@@ -1,20 +1,26 @@
+
 package com.android.app.ordersdishes.service.impl;
 
-import android.net.Uri;
+        import android.net.Uri;
+        import android.text.TextUtils;
 
-import com.android.app.ordersdishes.model.Dish;
-import com.android.app.ordersdishes.model.Order;
-import com.android.app.ordersdishes.service.ApiOrderDishesService;
+        import com.android.app.ordersdishes.model.Dish;
+        import com.android.app.ordersdishes.model.Order;
+        import com.android.app.ordersdishes.service.ApiOrderDishesService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
+
+        import java.io.BufferedReader;
+        import java.io.IOException;
+        import java.io.InputStream;
+        import java.io.InputStreamReader;
+        import java.net.HttpURLConnection;
+        import java.net.URL;
+        import java.util.ArrayList;
+        import java.util.Date;
+        import java.util.List;
 
 /**
  * Created by gabriel on 10/31/2015.
@@ -22,95 +28,125 @@ import java.util.List;
 public class ApiOrderDishesImpl implements ApiOrderDishesService {
     @Override
     public boolean login(String username, String password) {
-        //TODO: implement actual method
 
-        //simulates a process
-        for (int i = 0; i < 50; i++) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        Uri builtUri = Uri.parse(ApiOrderDishesService.BASE_API_URL).buildUpon()
+                .appendEncodedPath(ApiOrderDishesService.LOGIN_ENDPOINT)
+                .appendQueryParameter("email", username)
+                .appendQueryParameter("password",password).build();
+       // boolean result = Boolean.valueOf(callBaseApiService(builtUri));
 
         return true;
     }
 
     @Override
-    public boolean register(String username, String password, String confirmationPassword) {
-        //TODO: implement actual method
+    public boolean register(String username, String password) {
+        Uri builtUri = Uri.parse(ApiOrderDishesService.BASE_API_URL).buildUpon()
+                .appendEncodedPath(ApiOrderDishesService.REGISTER_ENDPOINT)
+                .appendQueryParameter("email", username)
+                .appendQueryParameter("password",password).build();
+       // boolean result = Boolean.parseBoolean(callBaseApiService(builtUri));
         return true;
     }
 
     @Override
-    public List<Dish> getListDishes() {
-        //TODO: implement actual method
+    public List<Dish> getListDishes(){
+        Uri builtUri = Uri.parse(ApiOrderDishesService.BASE_API_URL).buildUpon()
+                .appendEncodedPath(ApiOrderDishesService.DISHES_LIST_ENDPOINT)
+                .build();
 
-        //simulates a process
-        for (int i = 0; i < 50; i++) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
+        JSONArray dishesJsonArray = null;
         List<Dish> dishes = new ArrayList<>();
+        try {
+            dishesJsonArray = new JSONArray(callBaseApiService(builtUri));
 
-        for (int index = 1; index < 50; index++) {
-            Dish dish = new Dish();
-            dish.setId(index);
-            dish.setName("Dish #" + index);
-            dish.setDescription("Description dish #" + index);
-            dish.setPrice(199.99f);
+            for (int i = 0; i < dishesJsonArray.length(); i++) {
+                JSONObject dishJsonObject = dishesJsonArray.getJSONObject(i);
+                String description = dishJsonObject.getString("Description");
+                Dish dish = new Dish();
+                dish.setId(dishJsonObject.getInt("Id"));
+                dish.setName(dishJsonObject.getString("Name"));
+                dish.setDescription(TextUtils.isEmpty(description) ? "" :description);
+                dish.setPrice(Float.parseFloat(dishJsonObject.getString("Price")));
 
-            dishes.add(dish);
+                dishes.add(dish);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
         return dishes;
     }
 
     @Override
     public boolean registerOrder(Order order, String username) {
-        //TODO: implement actual method
+        Uri builtUri = Uri.parse(ApiOrderDishesService.BASE_API_URL).buildUpon()
+                .appendEncodedPath(ApiOrderDishesService.ORDER_ENDPOINT)
+                .appendQueryParameter("dishId", String.valueOf(order.getDish().getId()))
+                .appendQueryParameter("username",username)
+                .build();
+        String result = callBaseApiService(builtUri);
+        if(!TextUtils.isEmpty(result)){
+            return true;
+        }
         return false;
     }
 
     @Override
     public List<Order> getListOrders(String username) {
-        //TODO: implement actual method
-
-        //simulates a process
-        for (int i = 0; i < 50; i++) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
         List<Order> orders = new ArrayList<>();
-
-        if (username == null)
+        if (username == null){
             return orders;
+        }
 
-        Dish dish = new Dish();
-        dish.setId(1);
-        dish.setName("Dish #" + 1);
-        dish.setDescription("Description dish #" + 1);
-        dish.setPrice(199.99f);
+        JSONArray ordersJsonArray = null;
+        Uri builtUri = Uri.parse(ApiOrderDishesService.BASE_API_URL).buildUpon()
+                .appendEncodedPath(ApiOrderDishesService.ORDER_LIST_ENDPOINT)
+                .appendQueryParameter("username", username)
+                .build();
 
-        for (int index = 1; index < 10; index++) {
-            Order order = new Order();
-            order.setId(index);
-            order.setDish(dish);
-            order.setDate(new Date());
-            order.setState(0);
+        try {
+            ordersJsonArray = new JSONArray(callBaseApiService(builtUri));
 
-            orders.add(order);
+            for (int i = 0; i < ordersJsonArray.length(); i++) {
+                JSONObject orderJsonObject = ordersJsonArray.getJSONObject(i);
+                JSONObject dishJsonObject = orderJsonObject.getJSONObject("Dish");
+
+                Dish dish = new Dish();
+                dish.setId(dishJsonObject.getInt("Id"));
+                dish.setName(dishJsonObject.getString("Name"));
+                String description = dishJsonObject.getString("Description");
+                dish.setDescription(TextUtils.isEmpty(description) ? "" :description);
+                dish.setPrice(Float.parseFloat(dishJsonObject.getString("Price")));
+
+                Order order = new Order();
+                order.setId(orderJsonObject.getInt("Id"));
+                order.setDish(dish);
+                order.setDate(new Date(orderJsonObject.getString("Date")));
+                order.setState(orderJsonObject.getInt("State"));
+
+                orders.add(order);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         return orders;
+    }
+
+    @Override
+    public boolean receiveOrder(Order order) {
+        Uri builtUri = Uri.parse(ApiOrderDishesService.BASE_API_URL).buildUpon()
+                .appendEncodedPath(ApiOrderDishesService.ORDER_LIST_ENDPOINT)
+                .appendQueryParameter("id", String.valueOf(order.getId()))
+                .build();
+
+        String result = callBaseApiService(builtUri);
+        if(!TextUtils.isEmpty(result)){
+            return true;
+        }
+        return false;
     }
 
     private String callBaseApiService(Uri builtUri) {
