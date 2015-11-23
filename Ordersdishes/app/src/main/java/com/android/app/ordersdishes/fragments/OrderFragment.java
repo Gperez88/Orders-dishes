@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.android.app.ordersdishes.R;
 import com.android.app.ordersdishes.adapters.OrderAdapter;
+import com.android.app.ordersdishes.model.Order;
 import com.android.app.ordersdishes.service.ApiOrderDishesService;
 import com.android.app.ordersdishes.service.impl.ApiOrderDishesImpl;
+import com.gp89developers.android.commonutils.utils.CustomAsyncTask;
 import com.gp89developers.android.commonutils.widget.recyclerview.DividerItemDecoration;
 import com.gp89developers.android.commonutils.widget.recyclerview.RecyclerEmptyView;
 
@@ -43,7 +48,6 @@ public class OrderFragment extends BaseAppListFragment<OrderAdapter> {
         listRecyclerView.addItemDecoration(new DividerItemDecoration(getSupportActivity(), DividerItemDecoration.VERTICAL_LIST));
         listRecyclerView.setEmptyView(emptyContainer);
         listRecyclerView.setHasFixedSize(true);
-
         apiOrderDishesService = new ApiOrderDishesImpl();
     }
 
@@ -58,5 +62,32 @@ public class OrderFragment extends BaseAppListFragment<OrderAdapter> {
         }
 
         return new OrderAdapter(apiOrderDishesService.getListOrders(username));
+    }
+
+    private void receiveOrder(){
+        ReceiveOrderTask receiveOrderTask = new ReceiveOrderTask();
+        Order order = new Order();
+        order.setId(7);
+        receiveOrderTask.execute(order);
+    }
+
+    private class ReceiveOrderTask extends CustomAsyncTask<Order, Void, Boolean> {
+        private static final int ORDER_INDEX_PARAM = 0;
+        private ApiOrderDishesService apiOrderDishesService;
+
+        public ReceiveOrderTask() {
+            super(getSupportActivity());
+            apiOrderDishesService = new ApiOrderDishesImpl();
+        }
+
+        @Override
+        protected Boolean doInBackground(Order... params) {
+            return apiOrderDishesService.receiveOrder(params[ORDER_INDEX_PARAM]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean orderReceived) {
+
+        }
     }
 }
