@@ -81,6 +81,13 @@ public class DishFragment extends BaseAppListFragment<DishAdapter> implements Di
         }
 
         @Override
+        protected void onPostExecute(Boolean orderDone) {
+            if(!orderDone){
+                Toast.makeText(getSupportActivity(), "There was a problem trying to register the order. Try again later", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
         protected Boolean doInBackground(Order... params) {
             return apiOrderDishesService.registerOrder(params[ORDER_INDEX_PARAM]);
         }

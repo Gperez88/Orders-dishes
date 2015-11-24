@@ -86,5 +86,11 @@ public class OrderFragment extends BaseAppListFragment<OrderAdapter> implements 
             return apiOrderDishesService.receiveOrder(params[ORDER_INDEX_PARAM]);
         }
 
+        @Override
+        protected void onPostExecute(Boolean orderReceived) {
+            if(!orderReceived){
+                Toast.makeText(getSupportActivity(), "There was a problem trying to receive the order. Try again later", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
