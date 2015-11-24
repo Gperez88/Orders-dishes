@@ -2,6 +2,7 @@ package com.android.app.ordersdishes.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
             return;
 
         dishViewHolder.nameTextView.setText(dish.getName());
-        dishViewHolder.descriptionTextView.setText(TextUtils.isEmpty(dish.getDescription()) ? "" : dish.getDescription());
+        dishViewHolder.descriptionTextView.setText(dish.getDescription().length() == 4 ? " " : dish.getDescription());
         dishViewHolder.priceTextView.setText(NumberFormat.getCurrencyInstance().format(dish.getPrice()));
 
         dishViewHolder.registerOrderButton.setOnClickListener(new View.OnClickListener() {

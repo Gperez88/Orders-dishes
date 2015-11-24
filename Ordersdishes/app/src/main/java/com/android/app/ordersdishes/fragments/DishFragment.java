@@ -85,9 +85,5 @@ public class DishFragment extends BaseAppListFragment<DishAdapter> implements Di
             return apiOrderDishesService.registerOrder(params[ORDER_INDEX_PARAM]);
         }
 
-        @Override
-        protected void onPostExecute(Boolean orderDone) {
-
-        }
     }
 }

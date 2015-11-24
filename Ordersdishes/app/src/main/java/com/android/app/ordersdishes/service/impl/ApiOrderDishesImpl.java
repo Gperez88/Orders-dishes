@@ -157,7 +157,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
     @Override
     public boolean receiveOrder(Order order) {
         Uri builtUri = Uri.parse(ApiOrderDishesService.BASE_API_URL).buildUpon()
-                .appendEncodedPath(ApiOrderDishesService.ORDER_LIST_ENDPOINT)
+                .appendEncodedPath(ApiOrderDishesService.ORDER_RECEIVED_ENDPOINT)
                 .appendQueryParameter("id", String.valueOf(order.getId()))
                 .build();
 

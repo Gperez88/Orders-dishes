@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.app.ordersdishes.R;
 import com.android.app.ordersdishes.adapters.OrderAdapter;
@@ -20,7 +21,7 @@ import com.gp89developers.android.commonutils.widget.recyclerview.RecyclerEmptyV
 
 import java.io.Serializable;
 
-public class OrderFragment extends BaseAppListFragment<OrderAdapter> {
+public class OrderFragment extends BaseAppListFragment<OrderAdapter> implements OrderAdapter.OrderItemViewListener {
     public static final String PREFERENCES_ARG = "preferences_args";
     private ApiOrderDishesService apiOrderDishesService;
 
@@ -61,14 +62,14 @@ public class OrderFragment extends BaseAppListFragment<OrderAdapter> {
             e.printStackTrace();
         }
 
-        return new OrderAdapter(apiOrderDishesService.getListOrders(username));
+        return new OrderAdapter(apiOrderDishesService.getListOrders(username), this);
     }
 
-    private void receiveOrder(){
-        ReceiveOrderTask receiveOrderTask = new ReceiveOrderTask();
-        Order order = new Order();
-        order.setId(7);
+    @Override
+    public void onOrderReceived(Order order) {
+        ReceiveOrderTask receiveOrderTask = new ReceiveOrderTask();;
         receiveOrderTask.execute(order);
+        Toast.makeText(getSupportActivity(), "Order received", Toast.LENGTH_LONG).show();
     }
 
     private class ReceiveOrderTask extends CustomAsyncTask<Order, Void, Boolean> {
@@ -85,9 +86,5 @@ public class OrderFragment extends BaseAppListFragment<OrderAdapter> {
             return apiOrderDishesService.receiveOrder(params[ORDER_INDEX_PARAM]);
         }
 
-        @Override
-        protected void onPostExecute(Boolean orderReceived) {
-
-        }
     }
 }
