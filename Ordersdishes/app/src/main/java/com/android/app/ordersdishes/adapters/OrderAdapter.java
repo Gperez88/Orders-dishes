@@ -69,9 +69,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         if (order == null)
             return;
 
+        final int ORDER_RECEIVED = 2;
         orderViewHolder.nameDishTextView.setText(order.getDish().getName());
         orderViewHolder.stateTextView.setText(ApiOrderDishesImpl.ORDER_STATE[order.getState()]);
         orderViewHolder.dateTextView.setText(new SimpleDateFormat(DATE_FORMAT).format(order.getDate()));
+
+        if(order.getState() == ORDER_RECEIVED){
+            orderViewHolder.receiveOrderButton.setEnabled(false);
+        }
 
         orderViewHolder.receiveOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
