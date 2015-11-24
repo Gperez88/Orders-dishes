@@ -27,7 +27,7 @@ public interface ApiOrderDishesService {
 
     public List<Dish> getListDishes();
 
-    public boolean registerOrder(Order order, String username);
+    public boolean registerOrder(Order order);
 
     public List<Order> getListOrders(String username);
 

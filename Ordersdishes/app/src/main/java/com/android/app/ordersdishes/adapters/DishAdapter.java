@@ -1,13 +1,16 @@
 package com.android.app.ordersdishes.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.app.ordersdishes.R;
 import com.android.app.ordersdishes.model.Dish;
+import com.android.app.ordersdishes.model.Order;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -16,16 +19,19 @@ import java.util.List;
  * Created by gabriel on 11/1/2015.
  */
 public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder> {
-    List<Dish> dishes;
+    private List<Dish> dishes;
+    private DishItemViewListener dishItemViewListener;
 
-    public DishAdapter(List<Dish> dishes) {
+    public DishAdapter(List<Dish> dishes, DishItemViewListener dishItemViewListener) {
         this.dishes = dishes;
+        this.dishItemViewListener = dishItemViewListener;
     }
 
     public static class DishViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
         private TextView descriptionTextView;
         private TextView priceTextView;
+        private Button registerOrderButton;
 
         public DishViewHolder(View itemView) {
             super(itemView);
@@ -33,16 +39,26 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
             nameTextView = (TextView) itemView.findViewById(R.id.name);
             descriptionTextView = (TextView) itemView.findViewById(R.id.description);
             priceTextView = (TextView) itemView.findViewById(R.id.price);
+            registerOrderButton = (Button) itemView.findViewById(R.id.register_order_button);
         }
+    }
 
-        public void bind(Dish dish) {
-            if (dish == null)
-                return;
+    public void bindDish(DishViewHolder dishViewHolder, final Dish dish) {
+        if (dish == null)
+            return;
 
-            nameTextView.setText(dish.getName());
-            descriptionTextView.setText(dish.getDescription());
-            priceTextView.setText(NumberFormat.getCurrencyInstance().format(dish.getPrice()));
-        }
+        dishViewHolder.nameTextView.setText(dish.getName());
+        dishViewHolder.descriptionTextView.setText(TextUtils.isEmpty(dish.getDescription()) ? "" : dish.getDescription());
+        dishViewHolder.priceTextView.setText(NumberFormat.getCurrencyInstance().format(dish.getPrice()));
+
+        dishViewHolder.registerOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Order order = new Order();
+                order.setDish(dish);
+                dishItemViewListener.onOrderPlaced(order);
+            }
+        });
     }
 
     @Override
@@ -52,12 +68,17 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.DishViewHolder
     }
 
     @Override
-    public void onBindViewHolder(DishViewHolder holder, int position) {
-        holder.bind(dishes.get(position));
+    public void onBindViewHolder(DishViewHolder dishViewHolder, int position) {
+        Dish dish = dishes.get(position);
+        bindDish(dishViewHolder, dish);
     }
 
     @Override
     public int getItemCount() {
         return dishes.size();
+    }
+
+    public interface DishItemViewListener {
+        void onOrderPlaced(Order order);
     }
 }

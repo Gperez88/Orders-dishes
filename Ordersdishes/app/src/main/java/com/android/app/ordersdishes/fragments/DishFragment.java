@@ -1,16 +1,21 @@
 package com.android.app.ordersdishes.fragments;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.app.ordersdishes.R;
 import com.android.app.ordersdishes.adapters.DishAdapter;
+import com.android.app.ordersdishes.model.Order;
 import com.android.app.ordersdishes.service.ApiOrderDishesService;
 import com.android.app.ordersdishes.service.impl.ApiOrderDishesImpl;
+import com.gp89developers.android.commonutils.utils.CustomAsyncTask;
 import com.gp89developers.android.commonutils.widget.recyclerview.DividerItemDecoration;
 import com.gp89developers.android.commonutils.widget.recyclerview.RecyclerEmptyView;
 
-public class DishFragment extends BaseAppListFragment<DishAdapter> {
+public class DishFragment extends BaseAppListFragment<DishAdapter> implements DishAdapter.DishItemViewListener {
     private ApiOrderDishesService apiOrderDishesService;
 
     public static DishFragment create() {
@@ -42,6 +47,47 @@ public class DishFragment extends BaseAppListFragment<DishAdapter> {
     }
 
     public DishAdapter setupAdapter() {
-        return new DishAdapter(apiOrderDishesService.getListDishes());
+        return new DishAdapter(apiOrderDishesService.getListDishes(), this);
+    }
+
+    private String getUsername(){
+        String username = null;
+
+        try {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getSupportActivity());
+            username = preferences.getString(getString(R.string.prompt_username), null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return username;
+    }
+
+    @Override
+    public void onOrderPlaced(Order order) {
+        order.setUsername(getUsername());
+        OrderDishTask orderDishTask = new OrderDishTask();
+        orderDishTask.execute(order);
+        Toast.makeText(getSupportActivity(), "Order placed", Toast.LENGTH_LONG).show();
+    }
+
+    private class OrderDishTask extends CustomAsyncTask<Order, Void, Boolean> {
+        private static final int ORDER_INDEX_PARAM = 0;
+        private ApiOrderDishesService apiOrderDishesService;
+
+        public OrderDishTask() {
+            super(getSupportActivity());
+            apiOrderDishesService = new ApiOrderDishesImpl();
+        }
+
+        @Override
+        protected Boolean doInBackground(Order... params) {
+            return apiOrderDishesService.registerOrder(params[ORDER_INDEX_PARAM]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean orderDone) {
+
+        }
     }
 }

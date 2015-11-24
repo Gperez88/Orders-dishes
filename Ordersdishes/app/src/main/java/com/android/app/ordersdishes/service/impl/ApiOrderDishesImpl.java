@@ -33,9 +33,16 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
                 .appendEncodedPath(ApiOrderDishesService.LOGIN_ENDPOINT)
                 .appendQueryParameter("email", username)
                 .appendQueryParameter("password",password).build();
-       // boolean result = Boolean.valueOf(callBaseApiService(builtUri));
 
-        return true;
+        Boolean result = false;
+        try {
+            JSONObject response = new JSONObject(callBaseApiService(builtUri));
+            result = response.getBoolean("Response");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
@@ -44,8 +51,15 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
                 .appendEncodedPath(ApiOrderDishesService.REGISTER_ENDPOINT)
                 .appendQueryParameter("email", username)
                 .appendQueryParameter("password",password).build();
-       // boolean result = Boolean.parseBoolean(callBaseApiService(builtUri));
-        return true;
+        Boolean result = false;
+        try {
+            JSONObject response = new JSONObject(callBaseApiService(builtUri));
+            result = response.getBoolean("Response");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
@@ -65,7 +79,7 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
                 Dish dish = new Dish();
                 dish.setId(dishJsonObject.getInt("Id"));
                 dish.setName(dishJsonObject.getString("Name"));
-                dish.setDescription(TextUtils.isEmpty(description) ? "" :description);
+                dish.setDescription(description);
                 dish.setPrice(Float.parseFloat(dishJsonObject.getString("Price")));
 
                 dishes.add(dish);
@@ -74,21 +88,26 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return dishes;
     }
 
     @Override
-    public boolean registerOrder(Order order, String username) {
+    public boolean registerOrder(Order order) {
         Uri builtUri = Uri.parse(ApiOrderDishesService.BASE_API_URL).buildUpon()
                 .appendEncodedPath(ApiOrderDishesService.ORDER_ENDPOINT)
                 .appendQueryParameter("dishId", String.valueOf(order.getDish().getId()))
-                .appendQueryParameter("username",username)
+                .appendQueryParameter("username",order.getUsername())
                 .build();
-        String result = callBaseApiService(builtUri);
-        if(!TextUtils.isEmpty(result)){
-            return true;
+        Boolean result = false;
+        try {
+            JSONObject response = new JSONObject(callBaseApiService(builtUri));
+            result = response.getBoolean("Response");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        return false;
+
+        return result;
     }
 
     @Override
@@ -116,13 +135,13 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
                 dish.setId(dishJsonObject.getInt("Id"));
                 dish.setName(dishJsonObject.getString("Name"));
                 String description = dishJsonObject.getString("Description");
-                dish.setDescription(TextUtils.isEmpty(description) ? "" :description);
+                dish.setDescription(description);
                 dish.setPrice(Float.parseFloat(dishJsonObject.getString("Price")));
 
                 Order order = new Order();
                 order.setId(orderJsonObject.getInt("Id"));
                 order.setDish(dish);
-                order.setDate(new Date(orderJsonObject.getString("Date")));
+                order.setDate(new Date());
                 order.setState(orderJsonObject.getInt("State"));
 
                 orders.add(order);
@@ -142,11 +161,15 @@ public class ApiOrderDishesImpl implements ApiOrderDishesService {
                 .appendQueryParameter("id", String.valueOf(order.getId()))
                 .build();
 
-        String result = callBaseApiService(builtUri);
-        if(!TextUtils.isEmpty(result)){
-            return true;
+        Boolean result = false;
+        try {
+            JSONObject response = new JSONObject(callBaseApiService(builtUri));
+            result = response.getBoolean("Response");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        return false;
+
+        return result;
     }
 
     private String callBaseApiService(Uri builtUri) {
